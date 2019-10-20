@@ -10,10 +10,10 @@ import Home from './pages/home/Home';
 import Terminology from './pages/terminology/Terminology';
 import MuscleGroups from './pages/muscle-groups/MuscleGroups';
 import NotFound from './pages/404/404';
+import { Container } from '@material-ui/core';
 
-const App: React.FC = () => {
-    return (
-
+const App: React.FC = () =>
+    <Container>
         <Router>
             <h1>W2W Fitness</h1>
             <div>
@@ -47,7 +47,6 @@ const App: React.FC = () => {
                 </Switch>
             </div>
         </Router>
-    );
-}
+    </Container>
 
 export default App;
