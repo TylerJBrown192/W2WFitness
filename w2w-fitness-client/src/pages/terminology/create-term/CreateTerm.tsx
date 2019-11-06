@@ -1,5 +1,6 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, FormGroup } from '@material-ui/core';
+import { createTerminology } from '../../../api';
 
 const CreateTerm: React.FC = () => {
     const [termForm, setTermForm] = useState({
@@ -7,10 +8,16 @@ const CreateTerm: React.FC = () => {
         definition: '',
     });
 
-
     const handleChange = (formKey: string) => (event: React.ChangeEvent<HTMLElement> & { target: { value: string } }) =>
         setTermForm({ ...termForm, [formKey]: event.target.value });
 
+    const submitForm = (): void => {
+        createTerminology(termForm)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch(alert);
+    }
 
     return <>
         <h2>Create Term</h2>
@@ -30,14 +37,13 @@ const CreateTerm: React.FC = () => {
                 label="Definition"
                 multiline
                 rows="4"
-                // defaultValue=""
                 value={termForm.definition}
                 onChange={handleChange('definition')}
                 margin="normal"
                 variant="outlined"
             />
 
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={submitForm}>
                 Submit
             </Button>
         </FormGroup>

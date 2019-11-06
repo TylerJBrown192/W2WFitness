@@ -1,6 +1,6 @@
 # W2W Fitness
 
-### TODO:
+## TODO
 
 * Install `eslint` and `tslint` for both sides of project
 * Isolate `.vscode` and `nodemon` definitions for reuse
