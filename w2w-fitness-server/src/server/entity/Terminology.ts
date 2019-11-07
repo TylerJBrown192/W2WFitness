@@ -6,6 +6,7 @@ import {
 
 @Entity()
 export default class Terminology {
+
     @PrimaryGeneratedColumn()
     public id: number;
 

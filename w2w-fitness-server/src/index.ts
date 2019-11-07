@@ -1,11 +1,16 @@
+import bodyParser from 'body-parser';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import express from 'express';
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
+import typeOrmConfig from './server/config';
 
 
 // Configure Server
+dotenv.config();
 const app = express();
+app.use(bodyParser.json());
 app.use(cors());
 
 
@@ -21,7 +26,7 @@ app.post('/terminology', (req, res) => {
 
 
 // Init Server
-createConnection().then((connection) => {
+createConnection(typeOrmConfig).then((connection) => {
 
     app.listen(process.env.PORT || 3001, () => {
         console.log(`Server is listening on port ${process.env.PORT || 3001}`);
