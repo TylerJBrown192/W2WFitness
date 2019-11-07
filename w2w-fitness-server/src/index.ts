@@ -1,5 +1,7 @@
 import cors from 'cors';
 import express from 'express';
+import 'reflect-metadata';
+import { createConnection } from 'typeorm';
 
 
 // Configure Server
@@ -19,7 +21,9 @@ app.post('/terminology', (req, res) => {
 
 
 // Init Server
-app.listen(process.env.PORT || 3001, () => {
+createConnection().then((connection) => {
 
-    console.log(`Server is listening on port ${process.env.PORT || 3001}`);
-});
+    app.listen(process.env.PORT || 3001, () => {
+        console.log(`Server is listening on port ${process.env.PORT || 3001}`);
+    });
+}).catch((error) => console.log('typeorm createConnection error: ', error));
