@@ -1,3 +1,10 @@
+## TODO:
+
+* Research better Router structure
+  * I dislike having nested Route Switches in different components, e.g. Terminology.tsx
+
+-----------------------------------
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
