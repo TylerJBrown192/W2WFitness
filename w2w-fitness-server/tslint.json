@@ -13,6 +13,13 @@
         "no-consecutive-blank-lines": [
             true,
             2
+        ],
+        "max-line-length": [
+            true,
+            {
+                "limit": 200,
+                "ignore-pattern": "^import [^,]+ from |^export | implements"
+            }
         ]
     },
     "rulesDirectory": []

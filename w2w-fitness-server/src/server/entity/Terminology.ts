@@ -1,7 +1,9 @@
 import {
     Column,
+    CreateDateColumn,
     Entity,
     PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -15,4 +17,9 @@ export default class Terminology {
 
     @Column()
     public description: string;
+
+    @CreateDateColumn()
+    public createdAt: Date;
+    @UpdateDateColumn()
+    public updatedAt: Date;
 }
