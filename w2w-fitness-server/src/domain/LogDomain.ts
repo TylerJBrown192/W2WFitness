@@ -5,8 +5,11 @@ import Log from '../server/entity/Log';
 
 export class LogDomain {
 
-    public getAllLogs() {
-
+    public async getAllLogs() {
+        const repository = getRepository(Log);
+        const test = await repository.find();
+        console.log(test);
+        return test;
     }
 
     public async getLogById(id: number): Promise<Log> {
