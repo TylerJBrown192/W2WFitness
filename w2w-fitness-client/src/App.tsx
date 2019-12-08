@@ -11,6 +11,7 @@ import Terminology from './pages/terminology/Terminology';
 import MuscleGroups from './pages/muscle-groups/MuscleGroups';
 import NotFound from './pages/404/404';
 import { Container } from '@material-ui/core';
+import DailyLog from './pages/daily-log/DailyLog';
 
 const App: React.FC = () =>
     <Container>
@@ -23,6 +24,9 @@ const App: React.FC = () =>
                             <Link to="/">Home</Link>
                         </li>
                         <li>
+                            <Link to="/daily-log">Daily Logs</Link>
+                        </li>
+                        <li>
                             <Link to="/terminology">Terminology</Link>
                         </li>
                         <li>
@@ -32,6 +36,9 @@ const App: React.FC = () =>
                 </nav>
 
                 <Switch>
+                    <Route path="/daily-log">
+                        <DailyLog />
+                    </Route>
                     <Route path="/terminology">
                         <Terminology />
                     </Route>

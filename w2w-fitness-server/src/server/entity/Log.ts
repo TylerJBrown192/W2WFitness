@@ -5,10 +5,9 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
+import PostgresNumericColumnTransformer from '../utils/PostgresNumericColumnTransformer';
 
-// TODO: postgres' node driver converts `decimal` types to strings coming out of the DB (due to js number sizing limitations?)
-// Let's not mess with the `pg` node driver, instead create a basic Transformer class and attach it to every `decimal` column
-// https://github.com/typeorm/typeorm/issues/873#issuecomment-424643086
+
 @Entity()
 export default class Log {
 
@@ -23,10 +22,13 @@ export default class Log {
     // Precision is the number of digits in a number.
     // Scale is the number of digits to the right of the decimal point in a number (and must not be greater than precision).
     // https://github.com/typeorm/typeorm/blob/master/src/decorator/options/ColumnNumericOptions.ts
-    @Column('decimal', { precision: 5, scale: 2 })
+    @Column('decimal', { precision: 5, scale: 2, transformer: new PostgresNumericColumnTransformer() })
     public weight: number;
 
-    @Column('decimal', { precision: 3, scale: 1 })
+    // TODO: postgres' node driver converts `decimal` types to strings coming out of the DB (due to js number sizing limitations?)
+    // Let's not mess with the `pg` node driver, instead create a basic Transformer class and attach it to every `decimal` column
+    // https://github.com/typeorm/typeorm/issues/873#issuecomment-424643086
+    @Column('decimal', { precision: 3, scale: 1, transformer: new PostgresNumericColumnTransformer() })
     public sleepHours: number;
 
     // TODO: Add a min & max constraint
@@ -43,16 +45,16 @@ export default class Log {
     // TODO: Macros table?
     //// Pros: Separate querying potential for data visualization
     //// Cons: currently only attached to this model, would just be DB & query overhead / bloat
-    @Column('decimal', { precision: 5, scale: 1 })
+    @Column('decimal', { precision: 5, scale: 1, transformer: new PostgresNumericColumnTransformer() })
     public calories: number;
 
-    @Column('decimal', { precision: 4, scale: 1 })
+    @Column('decimal', { precision: 4, scale: 1, transformer: new PostgresNumericColumnTransformer() })
     public fatGrams: number;
 
-    @Column('decimal', { precision: 4, scale: 1 })
+    @Column('decimal', { precision: 4, scale: 1, transformer: new PostgresNumericColumnTransformer() })
     public carbohydrateGrams: number;
 
-    @Column('decimal', { precision: 4, scale: 1 })
+    @Column('decimal', { precision: 4, scale: 1, transformer: new PostgresNumericColumnTransformer() })
     public proteinGrams: number;
 
     @CreateDateColumn()

@@ -43,6 +43,8 @@ app.get('/daily-log/:id', (req, res) => {
 app.post('/daily-log', (req, res) => {
     // TODO: validate Log class model
 
+    console.log('bod', req.body);
+
     new LogDomain().createLog(req.body as Log)
         .then((log: Log) => res.json(log)) // TODO: What HTTP code does this return? Does it line up with RESTful API design?
         .catch((ex: Error) => res.status(400).json({ error: ex }));
