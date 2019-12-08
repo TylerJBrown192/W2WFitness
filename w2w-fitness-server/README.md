@@ -8,6 +8,8 @@
 * Create Postman collection for all entities and include it in repo
 * Find a good schema builder (postgres specific? or external application?) and include it in repo
 * Break out Express routes out per model & compose in `index.ts`
+* User auth
+  * Potentially add a field to the Log table to make a daily Log publicly viewable?
 * Create seed data
 * Determine DB backup plan
 * Research migrations for typeORM

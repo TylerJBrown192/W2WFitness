@@ -26,24 +26,43 @@ app.post('/terminology', (req, res) => {
 });
 
 app.get('/daily-log', (req, res) => {
+    // TODO: validate ID in query params
+
+    // new LogDomain().getAllLogs()
+    //     .then((logs: Log[]) => res.json(log)) // TODO: What HTTP code does this return? Does it line up with RESTful API design?
+    //     .catch((ex: Error) => res.status(400).json({ error: ex })); // TODO: check Error instanceof here and return applicable status code
+});
+
+app.get('/daily-log/:id', (req, res) => {
+    // TODO: validate ID in query params
+
     // const logDomain = new LogDomain();
     // logDomain.getLog(req.query.id)
-    new LogDomain().getLog(req.query.id)
+    new LogDomain().getLogById(req.query.id)
+        .then((log: Log) => res.json(log)) // TODO: What HTTP code does this return? Does it line up with RESTful API design?
+        .catch((ex: Error) => res.status(400).json({ error: ex })); // TODO: check Error instanceof here and return applicable status code
+});
+
+app.post('/daily-log', (req, res) => {
+    // TODO: validate Log class model
+
+    new LogDomain().createLog(req.body as Log)
         .then((log: Log) => res.json(log)) // TODO: What HTTP code does this return? Does it line up with RESTful API design?
         .catch((ex: Error) => res.status(400).json({ error: ex }));
 });
 
-app.post('/daily-log', (req, res) => {
-    res.json('POST daily log');
-});
-
 app.put('/daily-log', (req, res) => {
-    res.json('PUT daily log');
+    // TODO: validate Log class model && ID
+
+    // new LogDomain().updateLog(req.body as Log)
+    //     .then((log: Log) => res.json(log)) // TODO: What HTTP code does this return? Does it line up with RESTful API design?
+    //     .catch((ex: Error) => res.status(400).json({ error: ex }));
 });
 
 // Init Server
 createConnection(typeOrmConfig).then((connection) => {
     console.log('conn', connection);
+
     app.listen(process.env.PORT || 3001, () => {
         console.log(`Server is listening on port ${process.env.PORT || 3001}`);
     });
