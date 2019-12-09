@@ -34,6 +34,7 @@ const CreateDailyLog: React.FC = () => {
     return <>
         <h2>Create Term</h2>
 
+        {/* TODO: Make this into a DatePicker (material-ui?) and bring in moment.js and enforce formatting (research postgres date formatting, because it's weird as hell...) */}
         <FormGroup>
             <TextField
                 // id="outlined-name"
@@ -89,6 +90,7 @@ const CreateDailyLog: React.FC = () => {
                 variant="outlined"
             />
 
+            {/* TODO: Auto-calculate this value based on all other macros? But still make it edit-able (due to alcohol calories, etc) */}
             <TextField
                 // id="outlined-name"
                 label="Calories"
@@ -124,28 +126,6 @@ const CreateDailyLog: React.FC = () => {
                 margin="normal"
                 variant="outlined"
             />
-
-
-
-            {/* <TextField
-                // id="outlined-name"
-                label="Name"
-                value={logForm.name}
-                onChange={handleChange('name')}
-                margin="normal"
-                variant="outlined"
-            />
-
-            <TextField
-                // id="outlined-multiline-static"
-                label="Definition"
-                multiline
-                rows="4"
-                value={logForm.definition}
-                onChange={handleChange('definition')}
-                margin="normal"
-                variant="outlined"
-            /> */}
 
             <Button variant="contained" color="primary" onClick={submitForm}>
                 Submit

@@ -58,6 +58,10 @@ app.put('/daily-log', (req, res) => {
     //     .catch((ex: Error) => res.status(400).json({ error: ex }));
 });
 
+app.delete('/daily-log', (req, res) => {
+    // TODO: This needs to acompany a migration / DB change of adding a 'deleted' column, as this data is actually super valuable (vs Terminology, which is pretty disposable)
+})
+
 // Init Server
 createConnection(typeOrmConfig).then((connection) => {
     console.log('conn', connection);
