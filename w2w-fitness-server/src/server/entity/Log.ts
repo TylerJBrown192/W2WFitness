@@ -42,9 +42,6 @@ export default class Log {
     @Column()
     public notes: string;
 
-    // TODO: Macros table?
-    //// Pros: Separate querying potential for data visualization
-    //// Cons: currently only attached to this model, would just be DB & query overhead / bloat
     @Column('decimal', { precision: 5, scale: 1, transformer: new PostgresNumericColumnTransformer() })
     public calories: number;
 
@@ -62,5 +59,5 @@ export default class Log {
     @UpdateDateColumn()
     public updatedAt: Date;
 
-    // TODO: create picturesUrl column
+    // TODO: create Media table for one to many mediaUrl relationship for associating pics & vids
 }

@@ -18,7 +18,7 @@ app.use(cors());
 
 // Routes
 app.get('/terminology', (req, res) => {
-    res.send('GET terminology');
+    res.send({ test: 'GET terminology' });
 });
 
 app.post('/terminology', (req, res) => {

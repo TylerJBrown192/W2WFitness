@@ -5,16 +5,16 @@ import Log from '../../../../../w2w-fitness-server/src/server/entity/Log';
 
 const CreateDailyLog: React.FC = () => {
     const [logForm, setLogForm] = useState<Partial<Log>>({
-        date: "1985-11-25",
-        weight: 474.2,
-        sleepHours: 7.3,
-        emotionalRating: 5,
-        physicalRating: 3,
-        notes: "testing via the UI boiiiiiii",
-        calories: 1427.5,
-        fatGrams: 70,
-        carbohydrateGrams: 210.5,
-        proteinGrams: 195.3,
+        date: undefined,
+        weight: undefined,
+        sleepHours: undefined,
+        emotionalRating: undefined,
+        physicalRating: undefined,
+        notes: undefined,
+        calories: undefined,
+        fatGrams: undefined,
+        carbohydrateGrams: undefined,
+        proteinGrams: undefined,
     });
 
     const handleChange = (formKey: string) => (event: React.ChangeEvent<HTMLElement> & { target: { value: string } }) =>
@@ -35,6 +35,7 @@ const CreateDailyLog: React.FC = () => {
         <h2>Create Term</h2>
 
         {/* TODO: Make this into a DatePicker (material-ui?) and bring in moment.js and enforce formatting (research postgres date formatting, because it's weird as hell...) */}
+        {/* TODO #2: Default to "Today" */}
         <FormGroup>
             <TextField
                 // id="outlined-name"
