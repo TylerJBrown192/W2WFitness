@@ -1,6 +1,6 @@
+import { plainToClass } from 'class-transformer';
 import { getRepository } from 'typeorm';
 import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
-import { plainToClass } from "class-transformer";
 import Log from '../server/entity/Log';
 
 export class LogDomain {

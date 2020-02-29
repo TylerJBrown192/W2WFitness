@@ -3,6 +3,8 @@ import { Link, useRouteMatch, Route, Switch, Redirect } from 'react-router-dom';
 import { getAllLogs } from '../../api';
 import CreateDailyLog from './create-daily-log/CreateDailyLog';
 import Log from '../../../../w2w-fitness-server/src/server/entity/Log';
+import { format } from 'date-fns'
+import ViewDailyLog from './view-daily-log/ViewDailyLog';
 
 const DailyLog: React.FC = () => {
     // It looks like React isn't batching multiple `useState` update invocations because they're in an async callback
@@ -32,6 +34,9 @@ const DailyLog: React.FC = () => {
             <h2>Daily Log</h2>
 
             <Switch>
+                <Route path={`${matchPath}/:id`} >
+                    <ViewDailyLog />
+                </Route>
                 <Route path={`${matchPath}/create`}>
                     <CreateDailyLog />
                 </Route>
@@ -42,7 +47,9 @@ const DailyLog: React.FC = () => {
                         <h4>Loading...</h4> :
                         <ul>
                             {localState.logs.map((log: Log) =>
-                                <li>{log.date}</li>
+                                <li key={log.id}>
+                                    <Link to={`${matchPath}/${log.id}`}>{format(new Date(log.date), 'MMM do (EEEE), yyy')}</Link>
+                                </li>
                             )}
                         </ul>
                     }
