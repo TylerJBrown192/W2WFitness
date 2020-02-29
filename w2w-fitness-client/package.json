@@ -7,7 +7,7 @@
         "eject": "react-scripts eject",
         "start": "react-scripts start",
         "test": "react-scripts test",
-        "lint": "tsc --noEmit && eslint src/**/*.{js,ts,jsx,tsx}"
+        "lint": "tsc --noEmit && eslint src/**/*.{js,ts,jsx,tsx} --color"
     },
     "browserslist": {
         "production": [
@@ -33,7 +33,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "tsc --noEmit && lint-staged"
+            "pre-commit": "tsc --noEmit && lint-staged --quiet"
         }
     },
     "lint-staged": {
