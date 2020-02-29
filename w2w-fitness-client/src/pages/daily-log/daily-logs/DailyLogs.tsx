@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Log from '../../../../../w2w-fitness-server/src/server/entity/Log';
-import { getAllLogs } from '../../../api';
+import { getAllLogs } from '../../../api/logs';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 

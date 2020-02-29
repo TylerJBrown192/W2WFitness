@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getLogById } from '../../../api';
+import { getLogById } from '../../../api/logs';
 import { useParams, Link } from 'react-router-dom';
 import Log from '../../../../../w2w-fitness-server/src/server/entity/Log';
 import { format } from 'date-fns';

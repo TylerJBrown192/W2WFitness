@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Button, FormGroup } from "@material-ui/core";
-import { createLog } from "../../../api";
+import { createLog } from "../../../api/logs";
 import Log from "../../../../../w2w-fitness-server/src/server/entity/Log";
 
 const CreateDailyLog: React.FC = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, FormGroup } from '@material-ui/core';
-import { createTerminology } from '../../../api';
+import { createTerminology } from '../../../api/terminology';
 
 const CreateTerm: React.FC = () => {
     const [termForm, setTermForm] = useState({
