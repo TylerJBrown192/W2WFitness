@@ -1,4 +1,4 @@
-import React, {  } from 'react';
+import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import CreateDailyLog from './create-daily-log/CreateDailyLog';
 import ViewDailyLog from './view-daily-log/ViewDailyLog';
@@ -13,7 +13,7 @@ const DailyLog: React.FC = () => {
                 <Route exact path={`/daily-log/create`}>
                     <CreateDailyLog />
                 </Route>
-                <Route path={`/daily-log/:id`} >
+                <Route path={`/daily-log/:id`}>
                     <ViewDailyLog />
                 </Route>
                 <Route exact path={`/daily-log`}>
@@ -24,7 +24,7 @@ const DailyLog: React.FC = () => {
                 </Route>
             </Switch>
         </>
-    )
-}
+    );
+};
 
 export default DailyLog;

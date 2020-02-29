@@ -20,7 +20,8 @@
         "jsx": "react",
         "noImplicitAny": true,
         "noImplicitThis": true,
-        "strictNullChecks": false
+        "strictNullChecks": false,
+        "experimentalDecorators": true
     },
     "include": [
         "src"

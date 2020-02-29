@@ -25,7 +25,7 @@ const Terminology: React.FC = () => {
                 </Route>
             </Switch>
         </>
-    )
-}
+    );
+};
 
 export default Terminology;

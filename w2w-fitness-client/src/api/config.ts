@@ -8,16 +8,16 @@ export const fetchBase = (apiRoute: string) => async ({
 }: {
     method: HttpMethods;
     urlParam?: string | number;
-    body?: any;
-}) => {
+    body?: unknown;
+}): Promise<unknown> => {
     const response = await fetch(`${API_URL}/${apiRoute}/${urlParam}`, {
         method,
         headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            Accept: 'application/json',
         },
         body: body && JSON.stringify(body),
-    })
+    });
 
     const parsedResponse = await response.json();
 
@@ -26,9 +26,9 @@ export const fetchBase = (apiRoute: string) => async ({
     }
 
     return parsedResponse;
-}
+};
 
 export enum HttpMethods {
     GET = 'GET',
-    POST = 'POST'
+    POST = 'POST',
 }

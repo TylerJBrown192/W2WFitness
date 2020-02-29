@@ -1,19 +1,15 @@
-import { fetchBase, HttpMethods } from "./config";
+import { fetchBase, HttpMethods } from './config';
+import Terminology from '../../../w2w-fitness-server/src/server/entity/Terminology';
 
 interface CreateTerm {
-    name: string,
-    definition: string,
+    name: string;
+    definition: string;
 }
 
 const fetchTerminology = fetchBase('terminology');
 
-export const createTerminology = async (termForm: CreateTerm) => {
-    const createdTerm = await fetchTerminology({ method: HttpMethods.POST, body: termForm })
+export const createTerminology = async (termForm: CreateTerm): Promise<Terminology> => {
+    const createdTerm = (await fetchTerminology({ method: HttpMethods.POST, body: termForm })) as Terminology;
 
     return createdTerm;
-}
-
-export const getAllTerminology = () => {
-
-    return true;
-}
+};

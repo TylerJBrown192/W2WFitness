@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import './App.css';
 import Home from './pages/home/Home';
 import Terminology from './pages/terminology/Terminology';
@@ -13,7 +8,7 @@ import NotFound from './pages/404/404';
 import { Container } from '@material-ui/core';
 import DailyLog from './pages/daily-log/DailyLog';
 
-const App: React.FC = () =>
+const App: React.FC = () => (
     <Container>
         <Router>
             <h1>W2W Fitness</h1>
@@ -55,5 +50,6 @@ const App: React.FC = () =>
             </div>
         </Router>
     </Container>
+);
 
 export default App;
