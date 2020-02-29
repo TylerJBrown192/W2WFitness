@@ -6,20 +6,32 @@ import { format } from 'date-fns';
 
 const ViewDailyLog: React.FC = () => {
     let { id } = useParams();
-    const [localState, setLocalState] = useState<{ loading: boolean, log: Log | null }>({
+    const [localState, setLocalState] = useState<{ loading: boolean, log?: Log | null, error?: string }>({
         loading: true,
         log: null,
+        error: null,
     });
 
+    console.log('rend?');
+
     useEffect(() => {
-        getLogById(id)
-            .then((res: Log) => {
+        const fetchLog = async () => {
+            try {
+                const log = await getLogById(id);
+
                 setLocalState({
                     loading: false,
-                    log: res,
+                    log,
                 })
-            })
-            .catch(alert);
+            } catch (err) {
+                setLocalState({
+                    loading: false,
+                    error: `${err.name}: ${err.message}`,
+                });
+            }
+        }
+
+        fetchLog();
     }, [id])
 
     return (
@@ -29,7 +41,10 @@ const ViewDailyLog: React.FC = () => {
             {localState.loading ?
                 <h4>Loading...</h4> :
                 <>
-                    <h4>Log for: {format(new Date(localState.log.date), 'EEEE, MMMM do, yyy')}}</h4>
+                    {localState.error
+                    ? <h4>Got error: {localState.error}</h4>
+                    : <h4>Log for: {format(new Date(localState.log.date), 'EEEE, MMMM do, yyy')}</h4>
+                    }
                 </>
             }
         </>

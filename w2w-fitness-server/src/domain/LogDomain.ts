@@ -6,7 +6,7 @@ import Log from '../server/entity/Log';
 export class LogDomain {
 
     public async getAllLogs() {
-        const repository = getRepository(Log);
+        const repository = getRepository<Log>(Log);
         const test = await repository.find();
         console.log(test);
         return test;
@@ -17,11 +17,12 @@ export class LogDomain {
 
         // TODO: Can `getRepository` be called in the constructor of this class, or should it be invoked every function call?
         // "You can call getRepository each time. Repository object kind of acts as a singleton." https://github.com/typeorm/typeorm/issues/3879#issuecomment-479689032
-        const repository = getRepository(Log);
+        const repository = getRepository<Log>(Log);
         let log: Log | undefined;
 
         try {
             log = await repository.findOne(id);
+            console.log(log?.id);
 
             // TODO: this might be a Promise<undefined>, then this won't work - test
             if (!log) {
@@ -48,7 +49,7 @@ export class LogDomain {
         const mappedLog = plainToClass(Log, log);
         console.log('mappedLog', mappedLog);
 
-        const repository = getRepository(Log);
+        const repository = getRepository<Log>(Log);
 
         const test = await repository.save(mappedLog);
 

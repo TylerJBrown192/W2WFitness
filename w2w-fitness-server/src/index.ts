@@ -34,8 +34,9 @@ app.get('/daily-log', (req, res) => {
 
 app.get('/daily-log/:id', (req, res) => {
   // TODO: validate ID in query params
+  console.log(req.params);
   new LogDomain()
-    .getLogById(req.query.id)
+    .getLogById(parseInt(req.params.id, 10))
     .then((log: Log) => res.json(log)) // TODO: 200 HTTP status - Does it line up with RESTful API design?
     .catch((ex: Error) => res.status(400).json({ error: ex })); // TODO: check Error instanceof here and return applicable status code
 });

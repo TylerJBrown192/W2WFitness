@@ -40,9 +40,8 @@ export const getAllLogs = async (): Promise<Log[]> => {
     return parsedData;
 }
 
-export const getLogById = async (id: number | string): Promise<Log> => {
-
-    const data = await fetch(`http://localhost:3001/daily-log/${id}`, {
+export const getLogById = async (id: number | string) => {
+    const fetchLog = await fetch(`http://localhost:3001/daily-log/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -50,9 +49,13 @@ export const getLogById = async (id: number | string): Promise<Log> => {
         }
     });
 
-    const parsedData = await data.json() as Log; // TODO: is casting (and thus clobbering the TS parser) the best method here? Research better fetch / typescript patterns
+    const log = await fetchLog.json();
 
-    return parsedData;
+    if (!fetchLog.ok) {
+        throw log.error;
+    }
+
+    return log;
 }
 
 export const createLog = async (log: Partial<Log>): Promise<Log> => {
