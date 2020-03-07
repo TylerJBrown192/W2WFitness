@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
 import Log from '../server/entity/Log';
 
-export class LogDomain {
+export default class LogDomain {
 
     public async getAllLogs() {
         const repository = getRepository<Log>(Log);
@@ -56,7 +56,5 @@ export class LogDomain {
         return test;
     }
 
-    public updateLog(log: Log) {
-
-    }
+    // public updateLog(log: Log) { }
 }

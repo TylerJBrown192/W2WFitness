@@ -27,6 +27,7 @@
 
 ## TODO
 
+* Read this and extrapolate lessons / tasks from it: <https://github.com/goldbergyoni/nodebestpractices#readme>
 * Unify all options in `ormconfig.json` vs `config.ts`
 * Research & implement `http2` node functionality w/ `http` v1 fallback
 * Find best Express model validator
