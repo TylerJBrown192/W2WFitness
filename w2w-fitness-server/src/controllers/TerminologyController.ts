@@ -1,13 +1,11 @@
 import express from 'express';
 
-const router = express.Router();
+export const TerminologyController = express.Router();
 
-router.get('/terminology', (req, res) => {
+TerminologyController.get('/terminology', (req, res) => {
     res.send({ test: 'GET terminology' });
   });
 
-router.post('/terminology', (req, res) => {
+TerminologyController.post('/terminology', (req, res) => {
     res.json('POST terminology');
   });
-
-export default router;

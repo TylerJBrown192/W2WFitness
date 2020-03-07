@@ -1,4 +1,7 @@
 const resolver = {
+    // getLogs: async function(args, req) {
+
+    // },
     hello() {
        return {
            text: 'Hello World',
