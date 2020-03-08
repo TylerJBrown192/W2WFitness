@@ -1,7 +1,10 @@
-const resolver = {
-    // getLogs: async function(args, req) {
+import LogDomain from '../../domain/LogDomain';
 
-    // },
+const resolver = {
+    async getAllLogs() {
+        const logs = await new LogDomain().getAllLogs();
+        return logs;
+    },
     hello() {
        return {
            text: 'Hello World',
