@@ -93,7 +93,9 @@ export default class LogDomain {
     }
 
     public async createLog(log: Log): Promise<Log> {
-        // TODO: Assume Log object shape validation has already happened by this point
+        // TODO: validate Log class model
+        console.log('bod', log);
+
 
         const mappedLog = plainToClass(Log, log);
         console.log('mappedLog', mappedLog);
@@ -105,5 +107,7 @@ export default class LogDomain {
         return savedLog;
     }
 
-    // public updateLog(log: Log) { }
+    // public updateLog(log: Log) {
+        // TODO: validate Log class model
+    // }
 }
