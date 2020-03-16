@@ -1,37 +1,14 @@
-import { buildSchema } from 'graphql';
+import { GraphQLObjectType, GraphQLSchema } from 'graphql';
+import { LogQueries } from './Log/LogQueries';
 
-const schema = buildSchema(`
-    type TestData {
-        text: String!
-        views: Int!
-    }
+const query = new GraphQLObjectType({
+    name: 'Query',
+    description: 'All GraphQL Queries for the application',
+    fields: {
+        ...LogQueries,
+    },
+});
 
-    type Log {
-        id: Int
-        date: String
-        weight: Float
-    }
-
-    type RootQuery {
-        hello: TestData!
-        getAllLogs: [Log!]
-    }
-
-    schema {
-        query: RootQuery
-    }
-`);
-
-export default schema;
-
-
-// sleepHours: number;
-// emotionalRating: number;
-// physicalRating: number;
-// notes: string;
-// calories: number;
-// fatGrams: number;
-// carbohydrateGrams: number;
-// proteinGrams: number;
-// createdAt: Date;
-// updatedAt: Date;
+export const schema = new GraphQLSchema({
+    query,
+});

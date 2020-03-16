@@ -1,41 +1,36 @@
 import {
+    GraphQLInt,
     GraphQLList,
-    GraphQLNonNull,
   } from 'graphql';
 import LogDomain from '../../../domain/LogDomain';
-//   import { getUsers } from '../../operations/users-operations';
-//   import User from './UserType';
-//   import UserRoleEnum from './UserRoleEnumType';
+import { LogType } from './LogType';
 
-const LogQueries = {
-    async getAllLogs() {
-        // try {
-            throw new Error('hi im here');
-            // const logs = await new LogDomain().getAllLogs();
-            // return logs;
-        // } catch (e) {
-
-        // }
+export const LogQueries = {
+    getAllLogs: {
+        type: new GraphQLList(LogType),
+        description: 'Get all Logs',
+        async resolve() {
+            try {
+                const logs = await new LogDomain().getAllLogs();
+                return logs;
+            } catch (e) {
+                throw new Error(e);
+            }
+        },
     },
-    async getLogById(id: number) {
-        const log = await new LogDomain().getLogById(id);
-        return log;
+    getLogById: {
+        type: LogType,
+        description: 'Get a single Log by ID',
+        args: {
+            id: { type: GraphQLInt },
+        },
+        async resolve(source: any, args: { [id: string]: number }, context: any, info: any) {
+            try {
+                const logs = await new LogDomain().getLogById(args.id);
+                return logs;
+            } catch (e) {
+                throw new Error(e);
+            }
+        },
     },
-    // users: {
-    //   type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(User))),
-    //   args: {
-    //     role: {
-    //       type: UserRoleEnum,
-    //     },
-    //   },
-    //   resolve: (_source, { role }) => {
-    //     const result = getUsers();
-    //     if (role != null) {
-    //       return result.filter((user) => user.role === role);
-    //     }
-    //     return result;
-    //   },
-    // },
-  };
-
-export default LogQueries;
+};

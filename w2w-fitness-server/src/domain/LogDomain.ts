@@ -1,59 +1,75 @@
 import { plainToClass } from 'class-transformer';
-import { getRepository } from 'typeorm';
+import { getRepository, QueryFailedError } from 'typeorm';
 import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
 import Log from '../server/entity/Log';
 
 export default class LogDomain {
+    // QUESTION: Can `getRepository` be called in the constructor of this class, or should it be invoked every function call?
+    // ANSWER: "You can call getRepository each time. Repository object kind of acts as a singleton." https://github.com/typeorm/typeorm/issues/3879#issuecomment-479689032
 
-    public async getAllLogs() {
-        const repository = getRepository<Log>(Log);
-        const test = await repository.find();
-        console.log(test);
-        return test;
+    public async getAllLogs(): Promise<Log[]> {
+        try {
+            const repository = getRepository<Log>(Log);
+
+            const logs = await repository.find();
+
+            return logs;
+        } catch (e) {
+            if (e instanceof EntityNotFoundError) {
+                // TODO: More detailed error throwing here & logging
+                throw e;
+            }
+            if (e instanceof QueryFailedError) {
+                // TODO: More detailed error throwing here & logging
+            }
+
+            throw e;
+        }
     }
 
     public async getLogById(id: number): Promise<Log> {
-        // TODO: Assume id / int validation has already happened by this point
-
-        // TODO: Can `getRepository` be called in the constructor of this class, or should it be invoked every function call?
-        // "You can call getRepository each time. Repository object kind of acts as a singleton." https://github.com/typeorm/typeorm/issues/3879#issuecomment-479689032
-        const repository = getRepository<Log>(Log);
-        let log: Log | undefined;
-
-        try {
-            log = await repository.findOne(id);
-            console.log(log?.id);
-
-            // TODO: this might be a Promise<undefined>, then this won't work - test
-            if (!log) {
-                throw new EntityNotFoundError(Log, 'I am throwing this error on my own');
-            }
-        } catch (ex) {
-            if (ex instanceof EntityNotFoundError) {
-                // TODO: Find better error handling / throwing return pattern?
-                throw ex;
-            }
+        if (typeof id !== 'number') {
+            throw new Error(`Invalid ID argument given to getLogById: ${id}`);
         }
 
-        return log as Log; // TODO: this is kind of clobbering the TS linter... is there a better way to confirm that 'log' is truthy at this point?
+        try {
+            const repository = getRepository<Log>(Log);
+
+            const log = await repository.findOne(id);
+
+            if (!log) {
+                throw new EntityNotFoundError(Log, `ID = ${id}`);
+            }
+
+            return log;
+        } catch (e) {
+            if (e instanceof EntityNotFoundError) {
+                // TODO: More detailed error throwing here & logging
+                throw e;
+            }
+            if (e instanceof QueryFailedError) {
+                // TODO: More detailed error throwing here & logging
+            }
+
+            throw e;
+        }
     }
 
-    public getLogByDate(date: string) {
-        // TODO: Assume date / format validation has already happened by this point
-    }
+    // public getLogByDate(date: string) {
+    //     // TODO: Assume date / format validation has already happened by this point
+    // }
 
     public async createLog(log: Log): Promise<Log> {
-        // const test = new Log();
-        // console.log('log', log);
+        // TODO: Assume Log object shape validation has already happened by this point
 
         const mappedLog = plainToClass(Log, log);
         console.log('mappedLog', mappedLog);
 
         const repository = getRepository<Log>(Log);
 
-        const test = await repository.save(mappedLog);
+        const savedLog = await repository.save(mappedLog);
 
-        return test;
+        return savedLog;
     }
 
     // public updateLog(log: Log) { }
