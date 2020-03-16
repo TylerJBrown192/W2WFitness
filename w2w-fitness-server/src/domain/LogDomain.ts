@@ -1,8 +1,9 @@
 import { plainToClass } from 'class-transformer';
-import { isValid, parseISO } from 'date-fns';
+import { isValid } from 'date-fns';
 import { getRepository, QueryFailedError } from 'typeorm';
 import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
 import Log from '../server/entity/Log';
+import { HttpEntityNotFoundError, HttpError, HttpStatusCode } from '../utils/HttpError';
 
 export default class LogDomain {
     // QUESTION: Can `getRepository` be called in the constructor of this class, or should it be invoked every function call?
@@ -29,22 +30,18 @@ export default class LogDomain {
     }
 
     public getLogByUniqueColumn(logIdentifier: string): Promise<Log> {
-        console.log('str', logIdentifier);
-        console.log(isValid(parseISO(logIdentifier)));
-
-
         if (/^\d+$/.test(logIdentifier)) {
             return this.getLogById(parseInt(logIdentifier, 10));
         } else if (isValid(new Date(logIdentifier))) {
             return this.getLogByDate(logIdentifier);
         } else {
-            throw new Error(`Invalid unique identifier for Log given: ${logIdentifier}`); // TODO: This should have an error code other than 400
+            throw new HttpError(HttpStatusCode.UNPROCESSABLE_ENTITY, `Invalid unique identifier for Log given: ${logIdentifier}`);
         }
     }
 
     public async getLogById(id: number): Promise<Log> {
         if (typeof id !== 'number') {
-            throw new Error(`Invalid ID argument given to getLogById: ${id}`);
+            throw new HttpError(HttpStatusCode.UNPROCESSABLE_ENTITY, `Invalid ID argument given to getLogById: ${id}`);
         }
 
         try {
@@ -53,7 +50,7 @@ export default class LogDomain {
             const log = await repository.findOne(id);
 
             if (!log) {
-                throw new EntityNotFoundError(Log, `ID = ${id}`);
+                throw new HttpEntityNotFoundError(HttpStatusCode.NOT_FOUND, Log, `ID = ${id}`);
             }
 
             return log;
@@ -78,7 +75,7 @@ export default class LogDomain {
             const log = await repository.findOne({ where: { date }});
 
             if (!log) {
-                throw new EntityNotFoundError(Log, `Date = ${date}`);
+                throw new HttpEntityNotFoundError(HttpStatusCode.NOT_FOUND, Log, `Date = ${date}`);
             }
 
             return log;
@@ -93,7 +90,6 @@ export default class LogDomain {
 
             throw e;
         }
-
     }
 
     public async createLog(log: Log): Promise<Log> {
