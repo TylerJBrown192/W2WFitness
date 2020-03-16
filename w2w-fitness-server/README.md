@@ -13,6 +13,7 @@
 ## Project Startup
 
 * TODO: Lay out server installation steps before all others
+* Swap TSConfig over to ESConfig (can the frontend and backend share linters?)
 * `$ npm ci`
 * Ensure that Postgres is actively running (local machine only right now)
 * `$ npm run dev`

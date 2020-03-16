@@ -5,41 +5,37 @@ import Log from '../server/entity/Log';
 export const LogController = express.Router();
 
 LogController.get('/daily-log', (req, res) => {
-    // TODO: This just `new`s up an object and immediately discards it on reqeust
-    // Would creating a constant in `index.ts` for the Domain class(es) be better design? How would this interfere with the `getRepository` typeORM pattern?
     new LogDomain()
-      .getAllLogs()
-      .then((logs: Log[]) => res.json(logs)) // TODO: 200 HTTP status - Does it line up with RESTful API design?
-      .catch((ex: Error) => res.status(400).json({ error: ex })); // TODO: check Error instanceof here and return applicable status code
-  });
+        .getAllLogs()
+        .then((logs: Log[]) => res.json(logs))
+        .catch((ex: Error) => res.status(400).json({ error: ex })); // TODO: check Error instanceof here and return applicable status code
+});
 
-LogController.get('/daily-log/:id', (req, res) => {
-    // TODO: validate ID in query params
-    console.log(req.params);
+LogController.get('/daily-log/:logId', (req, res) => {
     new LogDomain()
-      .getLogById(parseInt(req.params.id, 10))
-      .then((log: Log) => res.json(log)) // TODO: 200 HTTP status - Does it line up with RESTful API design?
-      .catch((ex: Error) => res.status(400).json({ error: ex })); // TODO: check Error instanceof here and return applicable status code
-  });
+        .getLogByUniqueColumn(req.params.logId)
+        // .then((log: Log) => res.json(log))
+        .then((log: any) => res.json(log))
+        .catch((ex: Error) => res.status(400).json({ error: ex })); // TODO: check Error instanceof here and return applicable status code
+});
 
 LogController.post('/daily-log', (req, res) => {
     // TODO: validate Log class model
-
     console.log('bod', req.body);
 
     new LogDomain()
-      .createLog(req.body as Log)
-      .then((log: Log) => res.json(log)) // TODO: What HTTP code does this return? Does it line up with RESTful API design?
-      .catch((ex: Error) => res.status(400).json({ error: ex }));
-  });
+        .createLog(req.body as Log)
+        .then((log: Log) => res.status(201).json(log))
+        .catch((ex: Error) => res.status(400).json({ error: ex })); // TODO: check Error instanceof here and return applicable status code
+});
 
 LogController.put('/daily-log', (req, res) => {
     // TODO: validate Log class model && ID
     // new LogDomain().updateLog(req.body as Log)
     //     .then((log: Log) => res.json(log)) // TODO: What HTTP code does this return? Does it line up with RESTful API design?
     //     .catch((ex: Error) => res.status(400).json({ error: ex }));
-  });
+});
 
 LogController.delete('/daily-log', (req, res) => {
     // TODO: This needs to acompany a migration / DB change of adding a 'deleted' column, as this data is actually super valuable (vs Terminology, which is pretty disposable)
-  });
+});

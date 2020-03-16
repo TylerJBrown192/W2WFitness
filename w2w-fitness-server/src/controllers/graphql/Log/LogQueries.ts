@@ -11,8 +11,7 @@ export const LogQueries = {
         description: 'Get all Logs',
         async resolve() {
             try {
-                const logs = await new LogDomain().getAllLogs();
-                return logs;
+                return await new LogDomain().getAllLogs();
             } catch (e) {
                 throw new Error(e);
             }
@@ -26,8 +25,7 @@ export const LogQueries = {
         },
         async resolve(source: any, args: { [id: string]: number }, context: any, info: any) {
             try {
-                const logs = await new LogDomain().getLogById(args.id);
-                return logs;
+                return await new LogDomain().getLogById(args.id);
             } catch (e) {
                 throw new Error(e);
             }
