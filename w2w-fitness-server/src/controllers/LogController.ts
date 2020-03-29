@@ -1,11 +1,12 @@
 import express, { Request, Response } from 'express';
+import expressJwt from 'express-jwt';
 import { LogDomain } from '../domain/LogDomain';
 import { Log } from '../server/entity/Log';
 import { IHttpError } from '../utils/HttpError';
 
 export const LogController = express.Router();
 
-LogController.get('/daily-log', (req: Request, res: Response) => {
+LogController.get('/daily-log', expressJwt({ secret: process.env.JWT_SECRET as string }), (req: Request, res: Response) => {
     new LogDomain()
         .getAllLogs()
         .then((logs: Log[]) => res.json(logs))
