@@ -1,5 +1,5 @@
 import { fetchBase, HttpMethods } from './config';
-import Terminology from '../../../w2w-fitness-server/src/server/entity/Terminology';
+import { Terminology } from '../../../w2w-fitness-server/src/server/entity/Terminology';
 
 interface CreateTerm {
     name: string;

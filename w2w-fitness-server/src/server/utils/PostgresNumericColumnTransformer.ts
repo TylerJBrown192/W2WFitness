@@ -1,4 +1,4 @@
-export default class PostgresNumericColumnTransformer {
+export class PostgresNumericColumnTransformer {
     public to(data: number): number {
         return data;
     }

@@ -28,7 +28,12 @@
 
 ## TODO
 
+* Either share ESLint definitions for both sides of the app, or bring the Server's own version down into here (TSLint depreciated)
+* Migrate `Log` class name to `DailyLog`
+* User / Admin Permissions <https://github.com/MichielDeMey/express-jwt-permissions>
 * Read this and extrapolate lessons / tasks from it: <https://github.com/goldbergyoni/nodebestpractices#readme>
+* Containerize application
+* Unit testing & more
 * Unify all options in `ormconfig.json` vs `config.ts`
 * Add in a Location-based feature
   * Where did your workout take place?
@@ -39,7 +44,6 @@
     * <https://github.com/typeorm/typeorm/blob/master/docs/validation.md>
 * Create Postman collection for all entities and include it in repo
 * Find a good schema builder (postgres specific? or external application?) and include it in repo
-* Break out Express routes out per model & compose in `index.ts`
 * User auth
   * Potentially add a field to the Log table to make a daily Log publicly viewable?
 * Create seed data

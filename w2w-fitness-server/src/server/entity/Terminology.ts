@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export default class Terminology {
+export class Terminology {
 
     @PrimaryGeneratedColumn()
     public id: number;

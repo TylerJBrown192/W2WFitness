@@ -1,9 +1,7 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { Log } from './entity/Log';
+import { Terminology } from './entity/Terminology';
 
-import Log from './entity/Log';
-import Terminology from './entity/Terminology';
-
-// tslint:disable: object-literal-sort-keys
 const typeOrmConfig: PostgresConnectionOptions = {
     type: 'postgres',
     host: 'localhost',
