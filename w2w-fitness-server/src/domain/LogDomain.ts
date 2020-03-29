@@ -68,10 +68,16 @@ export default class LogDomain {
     }
 
     public async getLogByDate(date: string): Promise<Log> {
+        if (!isValid(new Date(date))) {
+            throw new HttpError(HttpStatusCode.UNPROCESSABLE_ENTITY, `Invalid Date argument given to getLogByDate: ${date}`);
+        }
+
         try {
             const repository = getRepository<Log>(Log);
 
-            // TODO: Though this works back and forth (e.g. Year first (database default) and Month first (American ordering)), I suspect this needs further testing
+            // TODO: Though this works in two date formats, I suspect this needs further testing
+            // Year first (database default: YYYY-MM-DD)
+            // Month first (American ordering: MM-DD-YYYY)
             const log = await repository.findOne({ where: { date }});
 
             if (!log) {

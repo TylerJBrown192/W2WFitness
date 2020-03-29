@@ -3,6 +3,8 @@
 * A React project w/ TS as a day-one priority
 * Bootstrapped w/ `create-react-app` - webpack remains un-ejected
 * `material-ui` is the UI component framework being used
+* Actively lints the project with `eslint` (using the `tslint` parser)
+* Guards from broken commits with `husky` and `lint-staged` git precommit hooks
 
 ## Project Startup
 
@@ -19,3 +21,6 @@
 * Work on separate Production build status, which only builds `project.json -> dependencies`
 * Add in git commit hooks for type checking
 * PropTypes && TS Interface validations
+* What is `manifest.json`?
+* How can `serviceWorker.ts` be utilised?
+* Switch over to Server Side rendering (port app over to Next.js?)
