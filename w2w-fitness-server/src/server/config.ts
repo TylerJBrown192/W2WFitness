@@ -17,4 +17,6 @@ const typeOrmConfig: PostgresConnectionOptions = {
     ],
 };
 
-export default typeOrmConfig;
+// This is a TypeScript module hack to get typeorm's CLI to play nicely with this config object
+// https://github.com/typeorm/typeorm/issues/4068
+export = typeOrmConfig;
