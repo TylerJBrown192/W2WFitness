@@ -5,11 +5,11 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
-import PostgresNumericColumnTransformer from '../utils/PostgresNumericColumnTransformer';
+import { PostgresNumericColumnTransformer } from '../utils/PostgresNumericColumnTransformer';
 
 
 @Entity()
-export default class Log {
+export class Log {
 
     @PrimaryGeneratedColumn()
     public id: number;

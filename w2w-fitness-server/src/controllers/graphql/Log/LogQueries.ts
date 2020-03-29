@@ -2,7 +2,7 @@ import {
     GraphQLInt,
     GraphQLList,
   } from 'graphql';
-import LogDomain from '../../../domain/LogDomain';
+import { LogDomain } from '../../../domain/LogDomain';
 import { LogType } from './LogType';
 
 export const LogQueries = {

@@ -9,6 +9,7 @@ import {
     GraphQLController,
     LogController,
     TerminologyController,
+    UserController,
 } from './controllers';
 import typeOrmConfig from './server/config';
 
@@ -23,13 +24,12 @@ app.use(cors());
 app.use(GraphQLController);
 app.use(TerminologyController);
 app.use(LogController);
+app.use(UserController);
 
 
 // Init Server
 createConnection(typeOrmConfig)
-  .then((connection) => {
-    // console.log('conn', connection);
-
+  .then(() => {
     app.listen(process.env.PORT || 3001, () => {
       console.log(`Server is listening on port ${process.env.PORT || 3001}`);
     });

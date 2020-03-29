@@ -1,4 +1,4 @@
-import Log from '../../../w2w-fitness-server/src/server/entity/Log';
+import { Log } from '../../../w2w-fitness-server/src/server/entity/Log';
 import { HttpMethods, fetchBase } from './config';
 
 const fetchLogs = fetchBase('daily-log');
