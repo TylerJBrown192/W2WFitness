@@ -20,7 +20,7 @@ export class User {
     @Length(3, 320)
     public email: string;
 
-    @Column({ length: 50 })
+    @Column({ length: 200 })
     @Length(1, 50)
     public password: string;
 

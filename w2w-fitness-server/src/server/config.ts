@@ -10,7 +10,10 @@ const typeOrmConfig: PostgresConnectionOptions = {
     username: process.env.POSTGRES_DB_USERNAME,
     password: process.env.POSTGRES_DB_PASSWORD,
     database: process.env.POSTGRES_DB_NAME,
-    synchronize: process.env.NODE_ENV !== 'production',
+    migrations: ['src/server/migration/**/*.ts'],
+    migrationsTransactionMode: 'all',
+    migrationsRun: process.env.NODE_ENV !== 'production',
+    synchronize: process.env.NODE_ENV !== 'production', // Update database automatically based on Entities
     logging: true,
     entities: [
         Terminology,
