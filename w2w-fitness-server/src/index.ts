@@ -4,7 +4,7 @@ dotenv.config();
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
-import { Connection, createConnection } from 'typeorm';
+import { createConnection } from 'typeorm';
 import {
     GraphQLController,
     LogController,
@@ -25,6 +25,11 @@ app.use(GraphQLController);
 app.use(TerminologyController);
 app.use(LogController);
 app.use(UserController);
+app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (err.name === 'UnauthorizedError') {
+        res.status(401).json({ message: 'Error: ' + err.message });
+    }
+});
 
 
 // Init Server

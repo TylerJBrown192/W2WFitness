@@ -66,7 +66,7 @@ export class UserDomain {
             const token = jwt.sign(
                 { userId: user.id, email: user.email },
                 jwtSecret,
-                { expiresIn: '1h' },
+                { expiresIn: '1s' },
             );
 
             return token;
