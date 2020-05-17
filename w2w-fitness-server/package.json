@@ -10,7 +10,8 @@
     "scripts": {
         "dev": "node -r ts-node/register src/index.ts",
         "start": "ts-node src/index.ts",
-        "migration:run": "ts-node ./node_modules/typeorm/cli.js --config src/server/config migration:run "
+        "migration:run": "ts-node ./node_modules/typeorm/cli.js --config src/server/config migration:run",
+        "migration:revert": "ts-node ./node_modules/typeorm/cli.js --config src/server/config migration:revert"
     },
     "author": "Tyler Brown",
     "license": "ISC",

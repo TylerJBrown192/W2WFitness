@@ -4,7 +4,7 @@ dotenv.config();
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
-import { createConnection } from 'typeorm';
+import { Connection, createConnection } from 'typeorm';
 import {
     GraphQLController,
     LogController,
@@ -29,11 +29,11 @@ app.use(UserController);
 
 // Init Server
 createConnection(typeOrmConfig)
-  .then(() => {
-    app.listen(process.env.PORT || 3001, () => {
-      console.log(`Server is listening on port ${process.env.PORT || 3001}`);
-    });
-  })
-  .catch((error) =>
-    console.log('typeorm createConnection error: ', error, typeOrmConfig),
-  );
+    .then(() => {
+        app.listen(process.env.PORT || 3001, () => {
+            console.log(`Server is listening on port ${process.env.PORT || 3001}`);
+        });
+    })
+    .catch((error) =>
+        console.log('typeorm createConnection error: ', error, typeOrmConfig),
+    );

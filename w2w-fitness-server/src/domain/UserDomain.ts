@@ -46,11 +46,12 @@ export class UserDomain {
             const user = await repository.findOne({ where: { email } });
 
             if (!user) {
-                throw new HttpEntityNotFoundError(HttpStatusCode.NOT_FOUND, User, `User with Email ${email} not found`);
+                throw new HttpEntityNotFoundError(HttpStatusCode.NOT_FOUND, User, `User with Email '${email}' not found`);
             }
 
             // TODO: Verify this the best way to check for password validity
             if (!(await user.checkPasswordValidity(password))) {
+                console.log('unauth');
                 throw new HttpError(HttpStatusCode.UNAUTHORIZED, `Invalid Password`);
             }
 
