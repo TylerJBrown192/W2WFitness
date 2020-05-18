@@ -66,7 +66,7 @@ export class UserDomain {
             const token = jwt.sign(
                 { userId: user.id, email: user.email },
                 jwtSecret,
-                { expiresIn: '1s' },
+                { expiresIn: '1 hour' },
             );
 
             return token;
@@ -75,40 +75,6 @@ export class UserDomain {
             throw e;
         }
     }
-
-
-    // login = async (req: Request, res: Response) => {
-    //     //Check if username and password are set
-    //     let { username, password } = req.body;
-    //     if (!(username && password)) {
-    //       res.status(400).send();
-    //     }
-
-    //     //Get user from database
-    //     const userRepository = getRepository(User);
-    //     let user: User;
-    //     try {
-    //       user = await userRepository.findOneOrFail({ where: { username } });
-    //     } catch (error) {
-    //       res.status(401).send();
-    //     }
-
-    //     //Check if encrypted password match
-    //     if (!user.checkIfUnencryptedPasswordIsValid(password)) {
-    //       res.status(401).send();
-    //       return;
-    //     }
-
-    //     //Sing JWT, valid for 1 hour
-    //     const token = jwt.sign(
-    //       { userId: user.id, username: user.username },
-    //       config.jwtSecret,
-    //       { expiresIn: "1h" }
-    //     );
-
-    //     //Send the jwt in the response
-    //     res.send(token);
-    //   };
 
     //   changePassword = async (req: Request, res: Response) => {
     //     //Get ID from JWT

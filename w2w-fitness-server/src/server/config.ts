@@ -6,11 +6,11 @@ import { User } from './entity/User';
 const typeOrmConfig: PostgresConnectionOptions = {
     type: 'postgres',
     host: process.env.POSTGRES_DB_HOST,
-    port: parseInt(process.env.POSTGRES_DB_PORT, 10),
+    port: parseInt(process.env.POSTGRES_DB_PORT || '5432', 10),
     username: process.env.POSTGRES_DB_USERNAME,
     password: process.env.POSTGRES_DB_PASSWORD,
     database: process.env.POSTGRES_DB_NAME,
-    migrations: ['src/server/migration/**/*.ts'],
+    // migrations: ['src/server/migration/**/*.ts'],
     migrationsTransactionMode: 'all',
     migrationsRun: process.env.NODE_ENV !== 'production', // Run migrations on Server start
     synchronize: process.env.NODE_ENV !== 'production', // Update database automatically based on Entities
@@ -20,6 +20,10 @@ const typeOrmConfig: PostgresConnectionOptions = {
         Log,
         User,
     ],
+    cli: {
+        entitiesDir: 'src/server/entity/',
+        migrationsDir: 'src/server/migration/',
+    },
 };
 
 // This is a TypeScript module hack to get typeorm's CLI to play nicely with this config object

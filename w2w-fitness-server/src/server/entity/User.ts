@@ -4,9 +4,11 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
+import { Log } from './Log';
 
 @Entity()
 export class User {
@@ -31,6 +33,9 @@ export class User {
     @Column({ length: 50 })
     @Length(1, 50)
     public lastName: string;
+
+    @OneToMany((type) => Log, (log: Log) => log.user)
+    public dailyLogs: Log[];
 
     @CreateDateColumn()
     public createdAt: Date;

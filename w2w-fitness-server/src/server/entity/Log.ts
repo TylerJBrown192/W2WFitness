@@ -2,10 +2,12 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    ManyToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
 import { PostgresNumericColumnTransformer } from '../utils/PostgresNumericColumnTransformer';
+import { User } from './User';
 
 
 @Entity()
@@ -53,6 +55,9 @@ export class Log {
 
     @Column('decimal', { precision: 4, scale: 1, transformer: new PostgresNumericColumnTransformer() })
     public proteinGrams: number;
+
+    @ManyToOne((type) => User, (user: User) => user.dailyLogs)
+    public user: User;
 
     @CreateDateColumn()
     public createdAt: Date;

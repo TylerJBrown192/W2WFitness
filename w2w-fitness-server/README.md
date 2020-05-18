@@ -10,6 +10,8 @@
     * Right now, this is relying on the `getRepository` typeorm method, imported within the Domain layer. Once this gets more complex, we'll break it out into it's own server-exclusive layer, as any Server-related "getting" logic shouldn't be defined within this layer, only consumed
   * `/src/server` as the Server layer, for all isolatable Server logic, object definitions, etc
 
+------------------------------------
+
 ## Project Startup
 
 * TODO: Lay out server installation steps before all others
@@ -26,7 +28,23 @@
   * This will attach VSCode to the actively running Node process, allowing for breakpoint setting within the IDE itself
 * NOTE: This project does not currently hot-reload, by design. Though it'd be nice to get Controller layer hot-reloading, the Server layer / ORM integration has so many automatic jobs running on startup, we wouldn't want a potentially destructive migration happening on-save. Maybe I'll revisit this in the future
 
+------------------------------------
+
+## Interacting with TypeORM & the CLI
+
+In general, one should primarily interact with TypeORM's CLI via the modified commands within `package.json` (`$ migration:run`, etc). This is because centralizing a TypeORM config file (located at `/src/server/config.ts`) and transpiling it from TS to JS on the fly is a bit more tedious than it seems.
+
+### Generating Migrations
+
+The `$ npm run migration:generate` command requires a 'Migration Name' argument to properly generate a Migration Class. To properly pass this to an `npm` script, execute something like this in your terminal:
+
+`$ npm run migration:generate -- -n YourMeaningfulMigrationName`
+
+------------------------------------
+
 ## TODO
+
+* Create a Trello board of all of these, yikes...
 
 * Either share ESLint definitions for both sides of the app, or bring the Server's own version down into here (TSLint depreciated)
 * Migrate `Log` class name to `DailyLog`

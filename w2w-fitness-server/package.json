@@ -9,9 +9,10 @@
     },
     "scripts": {
         "dev": "node -r ts-node/register src/index.ts",
-        "start": "ts-node src/index.ts",
+        "start": "ts-node --files src/utils/helper.d.ts src/index.ts",
         "migration:run": "ts-node ./node_modules/typeorm/cli.js --config src/server/config migration:run",
-        "migration:revert": "ts-node ./node_modules/typeorm/cli.js --config src/server/config migration:revert"
+        "migration:revert": "ts-node ./node_modules/typeorm/cli.js --config src/server/config migration:revert",
+        "migration:generate": "ts-node ./node_modules/typeorm/cli.js --config src/server/config migration:generate"
     },
     "author": "Tyler Brown",
     "license": "ISC",
