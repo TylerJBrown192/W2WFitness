@@ -15,14 +15,14 @@ LogController.get('/daily-log', expressJwt({ secret: process.env.JWT_SECRET }), 
 
 LogController.get('/daily-log/:logId', expressJwt({ secret: process.env.JWT_SECRET }), (req: Request, res: Response) => {
     new LogDomain()
-        .getLogByUniqueColumn(req.params.logId)
+        .getLogByUniqueColumn(req.user.userId, req.params.logId)
         .then((log: Log) => res.json(log))
         .catch((e: IHttpError) => res.status(e.status || 400).json({ error: e }));
 });
 
 LogController.post('/daily-log', expressJwt({ secret: process.env.JWT_SECRET }), (req: Request, res: Response) => {
     new LogDomain()
-        .createLog(req.body as Log)
+        .createLog(req.user.userId, req.body as Log)
         .then((log: Log) => res.status(201).json(log))
         .catch((e: IHttpError) => res.status(e.status || 400).json({ error: e }));
 });

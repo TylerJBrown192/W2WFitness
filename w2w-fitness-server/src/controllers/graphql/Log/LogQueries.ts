@@ -1,3 +1,5 @@
+import { Request } from 'express';
+import { UnauthorizedError } from 'express-jwt';
 import {
     GraphQLInt,
     GraphQLList,
@@ -9,12 +11,10 @@ export const LogQueries = {
     getAllLogs: {
         type: new GraphQLList(LogType),
         description: 'Get all Logs',
-        async resolve() {
-            try {
-                return await new LogDomain().getAllLogs();
-            } catch (e) {
-                throw new Error(e);
-            }
+        async resolve(source: any, args: any, req: Request, info: any) {
+            if (!req.user?.userId) { throw new UnauthorizedError('invalid_token', { message: 'Error: Invalid Login' }); }
+
+            return await new LogDomain().getAllLogs(req.user.userId);
         },
     },
     getLogById: {
@@ -23,12 +23,10 @@ export const LogQueries = {
         args: {
             id: { type: GraphQLInt },
         },
-        async resolve(source: any, args: { [id: string]: number }, context: any, info: any) {
-            try {
-                return await new LogDomain().getLogById(args.id);
-            } catch (e) {
-                throw new Error(e);
-            }
+        async resolve(source: any, args: { [id: string]: number }, req: Request, info: any) {
+            if (!req.user?.userId) { throw new UnauthorizedError('invalid_token', { message: 'Error: Invalid Login' }); }
+
+            return await new LogDomain().getLogById(req.user.userId, args.id);
         },
     },
 };

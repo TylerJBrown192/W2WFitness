@@ -9,7 +9,7 @@ export class LogDomain {
     // QUESTION: Can `getRepository` be called in the constructor of this class, or should it be invoked every function call?
     // ANSWER: "You can call getRepository each time. Repository object kind of acts as a singleton." https://github.com/typeorm/typeorm/issues/3879#issuecomment-479689032
 
-    public async getAllLogs(): Promise<Log[]> {
+    public async getAllLogs(userId: number): Promise<Log[]> {
         try {
             const repository = getRepository<Log>(Log);
 
@@ -27,17 +27,17 @@ export class LogDomain {
         }
     }
 
-    public getLogByUniqueColumn(logIdentifier: string): Promise<Log> {
+    public getLogByUniqueColumn(userId: number, logIdentifier: string): Promise<Log> {
         if (/^\d+$/.test(logIdentifier)) {
-            return this.getLogById(parseInt(logIdentifier, 10));
+            return this.getLogById(userId, parseInt(logIdentifier, 10));
         } else if (isValid(new Date(logIdentifier))) {
-            return this.getLogByDate(logIdentifier);
+            return this.getLogByDate(userId, logIdentifier);
         } else {
             throw new HttpError(HttpStatusCode.UNPROCESSABLE_ENTITY, `Invalid unique identifier for Log given: ${logIdentifier}`);
         }
     }
 
-    public async getLogById(id: number): Promise<Log> {
+    public async getLogById(userId: number, id: number): Promise<Log> {
         if (typeof id !== 'number') {
             throw new HttpError(HttpStatusCode.UNPROCESSABLE_ENTITY, `Invalid ID argument given to getLogById: ${id}`);
         }
@@ -65,7 +65,7 @@ export class LogDomain {
         }
     }
 
-    public async getLogByDate(date: string): Promise<Log> {
+    public async getLogByDate(userId: number, date: string): Promise<Log> {
         if (!isValid(new Date(date))) {
             throw new HttpError(HttpStatusCode.UNPROCESSABLE_ENTITY, `Invalid Date argument given to getLogByDate: ${date}`);
         }
@@ -96,7 +96,7 @@ export class LogDomain {
         }
     }
 
-    public async createLog(log: Log): Promise<Log> {
+    public async createLog(userId: number, log: Log): Promise<Log> {
         // TODO: validate Log class model
 
         const mappedLog = plainToClass(Log, log);
