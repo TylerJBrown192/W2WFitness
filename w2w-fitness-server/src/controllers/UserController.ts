@@ -8,7 +8,7 @@ export const UserController = express.Router();
 UserController.post('/user/create', (req: Request, res: Response) => {
     new UserDomain()
         .createUser(req.body as User)
-        .then((user: User) => res.status(201).json(user))
+        .then((createdAt: Date) => res.status(201).json(createdAt))
         .catch((e: IHttpError) => res.status(e.status || 400).json({ error: e }));
 });
 

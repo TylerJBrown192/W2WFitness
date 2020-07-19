@@ -10,22 +10,22 @@ export class UserDomain {
     // TODO: Need Unit tests for:
     // username, password, firstName, lastName
     // existence (non-null), min length, max length
-    public async createUser(user: User): Promise<User> {
+    public async createUser(user: User): Promise<Date> {
         try {
             const mappedUser = plainToClass(User, user);
-            console.log('mappedUser', mappedUser);
 
             const errors = await validate(mappedUser);
-
             if (errors.length) {
                 throw new HttpError(HttpStatusCode.UNPROCESSABLE_ENTITY, `Invalid User model submitted. Errors: ${errors.join('\n')}`);
             }
 
-            const repository = getRepository<User>(User);
-
             await mappedUser.hashPassword();
 
-            return await repository.save(user);
+            const repository = getRepository<User>(User);
+            await repository.save(mappedUser);
+
+            // The consuming client can respond however it wants to this action - the REST convention break here being that returned information is sensitive in this case
+            return mappedUser.createdAt;
         } catch (e) {
             // TODO: Test for duplicate email && throw 409:CONFLICT
 
