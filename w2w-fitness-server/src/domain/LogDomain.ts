@@ -38,18 +38,18 @@ export class LogDomain {
         }
     }
 
-    public async getLogById(userId: number, id: number): Promise<Log> {
-        if (typeof id !== 'number') {
-            throw new HttpError(HttpStatusCode.UNPROCESSABLE_ENTITY, `Invalid ID argument given to getLogById: ${id}`);
+    public async getLogById(userId: number, logId: number): Promise<Log> {
+        if (typeof logId !== 'number') {
+            throw new HttpError(HttpStatusCode.UNPROCESSABLE_ENTITY, `Invalid ID argument given to getLogById: ${logId}`);
         }
 
         try {
             const repository = getRepository<Log>(Log);
 
-            const log = await repository.findOne(id);
+            const log = await repository.findOne({ where: { id: logId, user: { id: userId }}});
 
             if (!log) {
-                throw new HttpEntityNotFoundError(HttpStatusCode.NOT_FOUND, Log, `ID = ${id}`);
+                throw new HttpEntityNotFoundError(HttpStatusCode.NOT_FOUND, Log, `ID = ${logId}`);
             }
 
             return log;
@@ -74,10 +74,10 @@ export class LogDomain {
         try {
             const repository = getRepository<Log>(Log);
 
-            // TODO: Though this works in two date formats, I suspect this needs further testing
+            // TODO: Though this works in the following two date formats, I suspect this needs further testing
             // Year first (database default: YYYY-MM-DD)
             // Month first (American ordering: MM-DD-YYYY)
-            const log = await repository.findOne({ where: { date }});
+            const log = await repository.findOne({ where: { date, user: { id: userId } }});
 
             if (!log) {
                 throw new HttpEntityNotFoundError(HttpStatusCode.NOT_FOUND, Log, `Date = ${date}`);
@@ -111,7 +111,9 @@ export class LogDomain {
         mappedLog.user = foundUser;
 
         const repository = getRepository<Log>(Log);
-        return await repository.save(mappedLog);
+        const savedLog = await repository.save(mappedLog);
+        delete savedLog.user;
+        return savedLog;
     }
 
     // public updateLog(log: Log) {
