@@ -3,6 +3,7 @@ import { isValid } from 'date-fns';
 import { getRepository, QueryFailedError } from 'typeorm';
 import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
 import { Log } from '../server/entity/Log';
+import { User } from '../server/entity/User';
 import { HttpEntityNotFoundError, HttpError, HttpStatusCode } from '../utils/HttpError';
 
 export class LogDomain {
@@ -13,7 +14,7 @@ export class LogDomain {
         try {
             const repository = getRepository<Log>(Log);
 
-            return await repository.find();
+            return await repository.find({ user: { id: userId } });
         } catch (e) {
             if (e instanceof EntityNotFoundError) {
                 // TODO: More detailed error throwing here & logging
@@ -100,10 +101,16 @@ export class LogDomain {
         // TODO: validate Log class model
 
         const mappedLog = plainToClass(Log, log);
-        console.log('mappedLog', mappedLog);
+
+        const userRepository = getRepository<User>(User);
+        const foundUser = await userRepository.findOne(userId);
+        if (!foundUser) {
+            throw new HttpEntityNotFoundError(HttpStatusCode.NOT_FOUND, User, `User not found`);
+        }
+
+        mappedLog.user = foundUser;
 
         const repository = getRepository<Log>(Log);
-
         return await repository.save(mappedLog);
     }
 

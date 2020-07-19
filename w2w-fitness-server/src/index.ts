@@ -26,6 +26,7 @@ app.use(TerminologyController);
 app.use(LogController);
 app.use(UserController);
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    // This will catch if any of the controllers throw an error from an invalid JWT parse - leave as last `app.use` declaration
     if (err.name === 'UnauthorizedError') {
         res.status(401).json({ message: 'Error: ' + err.message });
     }

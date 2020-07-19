@@ -18,7 +18,7 @@ export class Log {
 
     // column format: "2017-06-21"
     // TODO: Test passing a Date in here instead of a string
-    @Column('date', { unique: true })
+    @Column('date')
     public date: string;
 
     // Precision is the number of digits in a number.
@@ -63,6 +63,4 @@ export class Log {
     public createdAt: Date;
     @UpdateDateColumn()
     public updatedAt: Date;
-
-    // TODO: create Media table for one to many mediaUrl relationship for associating pics & vids
 }
