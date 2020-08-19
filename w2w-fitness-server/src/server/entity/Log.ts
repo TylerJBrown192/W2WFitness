@@ -58,6 +58,9 @@ export class Log {
 
     @ManyToOne((type) => User, (user: User) => user.dailyLogs)
     public user: User;
+    // The userId column is automatically created via TypeORM with the relationship declaration above
+    // but without the property being explicitly declared within this model, some relational operations become harder
+    public userId: number;
 
     @CreateDateColumn()
     public createdAt: Date;
